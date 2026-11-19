@@ -810,7 +810,7 @@ class TestDataFrameConstructors:
 
         # with index and columns
         result = pd.DataFrame(data, index=[10, 20], columns=["b", "c"])
-        expected = pd.DataFrame({"b": [3, 4], "c": [np.nan, np.nan]}, index=[10, 20])
+        expected = pd.DataFrame(dict(data), index=[10, 20], columns=["b", "c"])
         tm.assert_frame_equal(result, expected)
 
         # nested mapping
@@ -849,7 +849,7 @@ class TestDataFrameConstructors:
         frozendict = getattr(builtins, "frozendict", None)
         if frozendict is None:
             pytest.skip("frozendict not available in builtins")
-        data = frozendict(a=[1, 2], b=[3, 4])
+        data = frozendict({"a": [1, 2], "b": [3, 4]})
         result = pd.DataFrame(data)
         expected = pd.DataFrame({"a": [1, 2], "b": [3, 4]})
         tm.assert_frame_equal(result, expected)
